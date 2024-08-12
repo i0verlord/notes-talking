@@ -6,8 +6,8 @@ export const fakeData = [
     ), // Area Stores Data
     colors: JSON.stringify({
       id: "color-purple",
-      colorHeader: "FED0FD",
-      colorBody: "FEE5FD",
+      colorHeader: "#FED0FD",
+      colorBody: "#FEE5FD",
       colorText: "#18181A",
     }),  // Color of the card
     position: JSON.stringify({ x: 505, y: 10 }), // Postion of the card
