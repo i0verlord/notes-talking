@@ -10,11 +10,13 @@ const NoteCard = ({ note }) => {
     className="card"
     style={{
       backgroundColor: colors.colorBody,
+      left: `${position.x}px`,
+      top: `${position.y}px`,
     }}
   >
     <div 
       className="card-header"
-      style={{ backgroundColor: colors.colorHeader }}
+      style={{ backgroundColor: colors.colorBody }}
     >
       <Trash />
     </div>
