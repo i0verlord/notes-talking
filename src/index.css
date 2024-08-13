@@ -9,6 +9,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+  --spinner-animation-speed: 2s;
 }
 
 body {
@@ -61,4 +62,23 @@ textarea:focus {
   justify-content: space-between;
   align-items: center;
   padding: 5px;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  animation: spin var(--spinner-animation-speed) linear infinite;
+}
+
+.card-saving {
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }

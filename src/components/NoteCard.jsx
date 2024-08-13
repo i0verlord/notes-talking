@@ -2,8 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { db } from "../appwrite/databases"
 import { setNewOffset, autoGrow, setZIndex, bodyParser } from "../utils";
 import Trash from "../icons/Trash";
+import Spinner from "../icons/Spinner";
 
 const NoteCard = ({ note }) => {
+  const [saving, setSaving] = useState(false);
+  const keyUpTimer = useRef(null);
+
   const body = bodyParser(note.body);
   const [position, setPosition] = useState(JSON.parse(note.position));
   const colors = JSON.parse(note.colors);
@@ -54,9 +58,22 @@ const NoteCard = ({ note }) => {
     try {
       await db.notes.update(note.$id, payload);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+    setSaving(false);
+  };
+
+  const handleKeyUp = async () => {
+    setSaving(true);
+
+    if (keyUpTimer.current) {
+      clearTimeout(keyUpTimer.current);
+    };
+
+    keyUpTimer.current = setTimeout(() => {
+      saveData("body", textArearef.current.value);
+    }, 2000);
+  };
 
   return<div
     className="card"
@@ -73,9 +90,18 @@ const NoteCard = ({ note }) => {
       style={{ backgroundColor: colors.colorBody }}
     >
       <Trash />
+      {
+        saving && (
+          <div className="card-saving">
+            <Spinner color={ colors.colorText } />
+            <span style={{color: colors.colorText }}>Saving...</span>
+          </div>
+        )
+      }
     </div>
     <div className="card-body">
       <textarea
+        onKeyUp={handleKeyUp}
         style={{ color: colors.colorText }}
         defaultValue = {body}
         ref={textArearef}
