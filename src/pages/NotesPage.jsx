@@ -21,7 +21,7 @@ const NotesPage = () => {
         <NoteCard note={note} key={note.$id} setNotes={setNotes}/>
       ))}
     </div>
-  )
-}
+  );
+};
 
 export default NotesPage;
