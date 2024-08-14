@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { db } from "../appwrite/databases"
 import { setNewOffset, autoGrow, setZIndex, bodyParser } from "../utils";
-import Trash from "../icons/Trash";
+import DeleteButton from "./DeleteButton";
 import Spinner from "../icons/Spinner";
 
-const NoteCard = ({ note }) => {
+const NoteCard = ({ note, setNotes }) => {
   const [saving, setSaving] = useState(false);
   const keyUpTimer = useRef(null);
 
@@ -22,19 +22,21 @@ const NoteCard = ({ note }) => {
   }, []);
 
   const mouseDown = (e) => {
-    mouseStartPos.x = e.clientX;
-    mouseStartPos.y = e.clientY;
- 
-    document.addEventListener("mousemove", mouseMove);
-    document.addEventListener("mouseup", mouseUp);
-
-    setZIndex(cardRef.current);
+    if (e.target.className === "card-header") {
+      mouseStartPos.x = e.clientX;
+      mouseStartPos.y = e.clientY;
+   
+      document.addEventListener("mousemove", mouseMove);
+      document.addEventListener("mouseup", mouseUp);
+  
+      setZIndex(cardRef.current);
+    }
   };
 
   const mouseMove = (e) => {
     let mouseMoveDir = {
-        x: mouseStartPos.x - e.clientX,
-        y: mouseStartPos.y - e.clientY,
+      x: mouseStartPos.x - e.clientX,
+      y: mouseStartPos.y - e.clientY,
     };
  
     mouseStartPos.x = e.clientX;
@@ -89,7 +91,6 @@ const NoteCard = ({ note }) => {
       onMouseDown={mouseDown}
       style={{ backgroundColor: colors.colorBody }}
     >
-      <Trash />
       {
         saving && (
           <div className="card-saving">
@@ -98,6 +99,7 @@ const NoteCard = ({ note }) => {
           </div>
         )
       }
+      <DeleteButton noteId={note.$id} setNotes={setNotes} />
     </div>
     <div className="card-body">
       <textarea
