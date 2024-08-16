@@ -19,6 +19,7 @@ const NoteCard = ({ note }) => {
 
   useEffect(() => { 
     autoGrow(textArearef);
+    setZIndex(cardRef.current);
   }, []);
 
   const mouseDown = (e) => {
