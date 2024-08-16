@@ -4,7 +4,7 @@ import { setNewOffset, autoGrow, setZIndex, bodyParser } from "../utils";
 import DeleteButton from "./DeleteButton";
 import Spinner from "../icons/Spinner";
 
-const NoteCard = ({ note, setNotes }) => {
+const NoteCard = ({ note }) => {
   const [saving, setSaving] = useState(false);
   const keyUpTimer = useRef(null);
 
@@ -99,7 +99,7 @@ const NoteCard = ({ note, setNotes }) => {
           </div>
         )
       }
-      <DeleteButton noteId={note.$id} setNotes={setNotes} />
+      <DeleteButton noteId={note.$id} />
     </div>
     <div className="card-body">
       <textarea
