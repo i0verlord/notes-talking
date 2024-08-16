@@ -2,11 +2,11 @@ import { createContext, useEffect, useState } from "react";
 import Spinner from "../icons/Spinner";
 import { db } from "../appwrite/databases";
 
-export const NoteContext = createContext();
+export const NotesContext = createContext();
 
 const NoteProvider = ({ children }) => {
-  const [loading, setLoading] = useState(true);
   const [notes, setNotes] = useState();
+  const [loading, setLoading] = useState(true);
   const [selectedNote, setSelectedNote] = useState(null);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const NoteProvider = ({ children }) => {
   const contextData = { notes, setNotes, selectedNote, setSelectedNote };
 
   return (
-    <NoteContext.Provider value={contextData}>
+    <NotesContext.Provider value={contextData}>
       {loading ? (
         <div
           style={{
@@ -37,7 +37,7 @@ const NoteProvider = ({ children }) => {
       ) : (
         children
       )}
-    </NoteContext.Provider>
+    </NotesContext.Provider>
   );
 };
 

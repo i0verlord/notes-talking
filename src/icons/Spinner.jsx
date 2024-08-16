@@ -1,4 +1,6 @@
-const Spinner = ({ color="#fff", size="20" }) => {
+import React from "react";
+
+const Spinner = ({ color = "#fff", size = "20" }) => {
   return (
     <svg
       className="spinner"

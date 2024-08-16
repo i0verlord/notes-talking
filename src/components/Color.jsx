@@ -1,9 +1,9 @@
 import { useContext } from "react";
-import { NoteContext } from "../context/NoteContext";
+import { NotesContext } from "../context/NotesContext";
 import { db } from "../appwrite/databases";
 
 const Color = ({ color }) => {
-  const { selectedNote, notes, setNotes } = useContext(NoteContext);
+  const { selectedNote, notes, setNotes } = useContext(NotesContext);
 
   const changeColor = () => {
     try {
@@ -20,7 +20,7 @@ const Color = ({ color }) => {
       newNotes[currentNoteIndex] = updatedNote;
       setNotes(newNotes);
 
-      db.notes.update(selectedNote.$id, {colors:JSON.stringify(color)})
+      db.notes.update(selectedNote.$id, { colors: JSON.stringify(color) });
     } catch (error) {
       alert("You must select a note before changing colors");
     }

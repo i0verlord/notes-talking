@@ -1,20 +1,20 @@
-import React from 'react'
-import Trash from '../icons/Trash'
-import { db } from '../appwrite/databases';
-import { useContext } from 'react';
-import { NoteContext } from '../context/NoteContext';
+import React from "react";
+import Trash from "../icons/Trash";
+import { db } from "../appwrite/databases";
+import { useContext } from "react";
+import { NotesContext } from "../context/NotesContext";
 
 const DeleteButton = ({ noteId }) => {
-  const {setNotes} = useContext(NoteContext);
-  
-  const handleDelete = async () => {
-    db.notes.delete(noteId)
-    setNotes((prevState) => 
-      prevState.filter((note) => note.$id !== noteId)
-    );
+  const { setNotes } = useContext(NotesContext);
+
+  const handleDelete = async (e) => {
+    db.notes.delete(noteId);
+    setNotes((prevState) => prevState.filter((note) => note.$id !== noteId));
   };
   return (
-    <div onClick={handleDelete}><Trash /></div>
+    <div onClick={handleDelete}>
+      <Trash />
+    </div>
   );
 };
 

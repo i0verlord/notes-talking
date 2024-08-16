@@ -1,15 +1,15 @@
 import NoteCard from "../components/NoteCard";
 import Controls from "../components/Controls";
 import { useContext } from "react";
-import { NoteContext } from "../context/NoteContext";
+import { NotesContext } from "../context/NotesContext";
 
 const NotesPage = () => {
-  const { notes } = useContext(NoteContext);
+  const { notes } = useContext(NotesContext);
 
   return (
     <div>
       {notes.map((note) => (
-        <NoteCard key={note.$id} note={note}/>
+        <NoteCard key={note.$id} note={note} />
       ))}
       <Controls />
     </div>

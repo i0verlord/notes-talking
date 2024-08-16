@@ -19,8 +19,8 @@ body {
 
 #app {
   background-color: #212228;
-  background-image: linear-gradient(#292a30 0.1em, transparent 00.1em),
-    linear-gradient(90deg, #292a30 00.1em, transparent 00.1em);
+  background-image: linear-gradient(#292a30 0.1em, transparent 0.1em),
+    linear-gradient(90deg, #292a30 0.1em, transparent 0.1em);
   background-size: 4em 4em;
   height: 100vh;
   position: relative;
@@ -58,7 +58,7 @@ textarea:focus {
   height: 100%;
 }
 
-.color-header {
+.card-header {
   background-color: #9bd1de;
   border-radius: 5px 5px 0 0;
   display: flex;

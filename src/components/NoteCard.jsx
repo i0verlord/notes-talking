@@ -1,16 +1,17 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import Trash from "../icons/Trash";
 import { db } from "../appwrite/databases";
 import { setNewOffset, autoGrow, setZIndex, bodyParser } from "../utils";
 import DeleteButton from "./DeleteButton";
 import Spinner from "../icons/Spinner";
 import { useContext } from "react";
-import { NoteContext } from "../context/NoteContext";
+import { NotesContext } from "../context/NotesContext";
 
 const NoteCard = ({ note }) => {
   const [saving, setSaving] = useState(false);
   const keyUpTimer = useRef(null);
 
-  const { setSelectedNote } = useContext(NoteContext);
+  const { setSelectedNote } = useContext(NotesContext);
 
   const body = bodyParser(note.body);
   const [position, setPosition] = useState(JSON.parse(note.position));
@@ -31,16 +32,17 @@ const NoteCard = ({ note }) => {
       mouseStartPos.x = e.clientX;
       mouseStartPos.y = e.clientY;
 
+      setZIndex(cardRef.current);
+
       document.addEventListener("mousemove", mouseMove);
       document.addEventListener("mouseup", mouseUp);
 
-      setZIndex(cardRef.current);
       setSelectedNote(note);
     }
   };
 
   const mouseMove = (e) => {
-    let mouseMoveDir = {
+    const mouseMoveDir = {
       x: mouseStartPos.x - e.clientX,
       y: mouseStartPos.y - e.clientY,
     };
@@ -52,7 +54,7 @@ const NoteCard = ({ note }) => {
     setPosition(newPosition);
   };
 
-  const mouseUp = () => {
+  const mouseUp = async () => {
     document.removeEventListener("mousemove", mouseMove);
     document.removeEventListener("mouseup", mouseUp);
 
@@ -71,7 +73,7 @@ const NoteCard = ({ note }) => {
     setSaving(false);
   };
 
-  const handleKeyUp = () => {
+  const handleKeyUp = async () => {
     setSaving(true);
 
     if (keyUpTimer.current) {
@@ -99,6 +101,7 @@ const NoteCard = ({ note }) => {
         style={{ backgroundColor: colors.colorHeader }}
       >
         <DeleteButton noteId={note.$id} />
+
         {saving && (
           <div className="card-saving">
             <Spinner color={colors.colorText} />
