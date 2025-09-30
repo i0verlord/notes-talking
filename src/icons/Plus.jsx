@@ -11,8 +11,7 @@ const Plus = ({ size = "24", color = "#FFFFFF" }) => {
       fill="none"
       strokeWidth="2.5"
     >
-      <path strokeLinecap="round" d="M18 12H6M12 6v12">
-      </path>
+      <path strokeLinecap="round" d="M18 12H6M12 6v12"></path>
     </svg>
   );
 };
