@@ -1,1 +1,1 @@
-# app is functions properly now.
+A simple notes taking app!
