@@ -4,8 +4,10 @@ import { db } from "../appwrite/databases";
 
 export const NotesContext = createContext();
 
+const LOCAL_KEY = "notes-talking-local-notes";
+
 const NoteProvider = ({ children }) => {
-  const [notes, setNotes] = useState();
+  const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedNote, setSelectedNote] = useState(null);
 
@@ -13,13 +15,35 @@ const NoteProvider = ({ children }) => {
     init();
   }, []);
 
+  // persist notes to localStorage whenever they change
+  useEffect(() => {
+    try {
+      if (notes && Array.isArray(notes)) {
+        localStorage.setItem(LOCAL_KEY, JSON.stringify(notes));
+      }
+    } catch (err) {
+      console.error("Failed to write notes to localStorage:", err);
+    }
+  }, [notes]);
+
   const init = async () => {
     try {
       const response = await db.notes.list();
       setNotes(response.documents);
     } catch (err) {
       console.error("Failed to load notes:", err);
-      setNotes([]); // fallback to empty list on error
+      // fallback: try loading from localStorage
+      try {
+        const cached = localStorage.getItem(LOCAL_KEY);
+        if (cached) {
+          setNotes(JSON.parse(cached));
+        } else {
+          setNotes([]);
+        }
+      } catch (le) {
+        console.error("Failed to parse local notes:", le);
+        setNotes([]);
+      }
     } finally {
       setLoading(false);
     }

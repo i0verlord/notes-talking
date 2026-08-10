@@ -11,7 +11,7 @@ const NoteCard = ({ note }) => {
   const [saving, setSaving] = useState(false);
   const keyUpTimer = useRef(null);
 
-  const { setSelectedNote } = useContext(NotesContext);
+  const { setSelectedNote, setNotes } = useContext(NotesContext);
 
   const body = bodyParser(note.body);
   const [position, setPosition] = useState(JSON.parse(note.position));
@@ -67,8 +67,21 @@ const NoteCard = ({ note }) => {
 
     try {
       await db.notes.update(note.$id, payload);
+
+      // update local state so changes persist (and trigger localStorage save in context)
+      setNotes((prev) =>
+        (prev || []).map((n) =>
+          n.$id === note.$id ? { ...n, [key]: JSON.stringify(value) } : n
+        )
+      );
     } catch (error) {
       console.error(error);
+      // fallback: update local state so edits aren't lost
+      setNotes((prev) =>
+        (prev || []).map((n) =>
+          n.$id === note.$id ? { ...n, [key]: JSON.stringify(value) } : n
+        )
+      );
     }
     setSaving(false);
   };
