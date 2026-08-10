@@ -5,7 +5,6 @@ import { useRef } from "react";
 import { db } from "../appwrite/databases";
 import { useContext } from "react";
 import { NotesContext } from "../context/NotesContext";
-import { fakeData } from "../assets/fakeData";
 
 const AddButton = () => {
   const { setNotes } = useContext(NotesContext);
