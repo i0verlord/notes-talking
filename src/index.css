@@ -19,9 +19,14 @@ body {
 
 #app {
   background-color: #212228;
-  background-image: linear-gradient(#292a30 0.1em, transparent 0.1em),
-    linear-gradient(90deg, #292a30 0.1em, transparent 0.1em);
-  background-size: 4em 4em;
+  /* diamond pattern background */
+  background-image: 
+    linear-gradient(45deg, #292a30 25%, transparent 25%),
+    linear-gradient(-45deg, #292a30 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #292a30 75%),
+    linear-gradient(-45deg, transparent 75%, #292a30 75%);
+  background-size: 64px 64px;
+  background-position: 0 0, 0 0, 32px 32px, 32px 32px;
   height: 100vh;
   position: relative;
   overflow: auto;
@@ -88,15 +93,15 @@ textarea:focus {
 
 #controls {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 1em;
   align-items: center;
   position: fixed;
-  left: 1em;
-  top: 50%;
-  transform: translateY(-50%);
+  left: 50%;
+  bottom: 1em;
+  transform: translateX(-50%);
   background-color: #35363e;
-  padding: 1em 1em;
+  padding: 0.5em 1em;
   border-radius: 40px;
 
   box-shadow: 0 1px 1px hsl(0deg 0% 0% / 0.075),
@@ -110,22 +115,22 @@ textarea:focus {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 40px;
-  width: 40px;
+  height: 48px;
+  width: 48px;
   border-radius: 50%;
   cursor: pointer;
   transition: 0.3s;
 }
 
 #add-btn:hover {
-  height: 45px;
-  width: 45px;
+  height: 52px;
+  width: 52px;
 }
 
 .color {
   background-color: grey;
-  height: 40px;
-  width: 40px;
+  height: 36px;
+  width: 36px;
   border-radius: 50%;
 
   cursor: pointer;
@@ -133,6 +138,6 @@ textarea:focus {
 }
 
 .color:hover {
-  height: 45px;
-  width: 45px;
+  height: 42px;
+  width: 42px;
 }
