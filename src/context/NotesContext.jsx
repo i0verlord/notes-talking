@@ -14,9 +14,15 @@ const NoteProvider = ({ children }) => {
   }, []);
 
   const init = async () => {
-    const response = await db.notes.list();
-    setNotes(response.documents);
-    setLoading(false);
+    try {
+      const response = await db.notes.list();
+      setNotes(response.documents);
+    } catch (err) {
+      console.error("Failed to load notes:", err);
+      setNotes([]); // fallback to empty list on error
+    } finally {
+      setLoading(false);
+    }
   };
 
   const contextData = { notes, setNotes, selectedNote, setSelectedNote };

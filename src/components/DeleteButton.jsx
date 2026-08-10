@@ -8,8 +8,15 @@ const DeleteButton = ({ noteId }) => {
   const { setNotes } = useContext(NotesContext);
 
   const handleDelete = async (e) => {
-    db.notes.delete(noteId);
-    setNotes((prevState) => prevState.filter((note) => note.$id !== noteId));
+    console.log("DeleteButton.handleDelete", { noteId });
+    try {
+      await db.notes.delete(noteId);
+      console.log("DeleteButton.handleDelete.success", noteId);
+    } catch (err) {
+      console.error("DeleteButton.handleDelete.error", err);
+      // still remove from UI so user sees immediate response
+    }
+    setNotes((prevState) => (prevState || []).filter((note) => note.$id !== noteId));
   };
   return (
     <div onClick={handleDelete}>
