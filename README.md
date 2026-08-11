@@ -1,1 +1,1 @@
-A simple notes taking app!
+Live website: https://notes-app-alpha-flame.vercel.app/
